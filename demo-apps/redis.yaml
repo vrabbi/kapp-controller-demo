@@ -1,0 +1,32 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: redis-helm
+  namespace: default
+spec:
+  serviceAccountName: demo-sa
+  fetch:
+  - helmChart:
+      name: redis
+      version: "17.3.17"
+      repository:
+        url: https://charts.bitnami.com/bitnami
+  template:
+  - helmTemplate:
+      valuesFrom:
+      - secretRef:
+          name: redis-values
+  deploy:
+  - kapp:
+      delete:
+        # Force delete PVCs, since StatefulSet does not delete them
+        rawOptions: ["--apply-ignored=true"]
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-values
+  namespace: default
+stringData:
+  data.yml: |
+    password: "1234567891234"

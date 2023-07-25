@@ -1,0 +1,16 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: contour-http-kbld
+  namespace: default
+spec:
+  serviceAccountName: demo-sa
+  fetch:
+  - http:
+      url: https://projectcontour.io/quickstart/contour.yaml
+  template:
+  - kbld:
+      paths:
+      - "."
+  deploy:
+  - kapp: {}

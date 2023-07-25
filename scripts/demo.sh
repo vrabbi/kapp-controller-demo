@@ -1,7 +1,7 @@
 ########################
 # include the magic
 ########################
-. demo-magic.sh
+. scripts/demo-magic.sh
 
 # Add Custom Collor schemes for output
 bold=`tput bold`
@@ -22,7 +22,8 @@ function prompt
 
 # hide the evidence
 clear
-slides opening-slides.md
+slides slides/opening-slides.md
+
 prompt Lets first apply our apps
 pe "kubectl apply -f demo-apps/"
 prompt Lets see what configurations we have applied
@@ -54,7 +55,7 @@ pe "diff --color demo-apps/simple-app.yaml demo-apps/simple-app-cls-02.yaml"
 wait
 clear
 prompt Lets check out our simple app
-pe "curl http://simple-app.default.svc.cluster.local"
+pe "curl http://simple-app.default.svc.cluster.local | tidy -xml -quiet | bat"
 wait
 clear
-slides summary.md
+slides slides/summary.md

@@ -9,11 +9,28 @@ For this script you will need a linux machine with:
 4. [kwt](https://github.com/carvel-dev/kwt)
 5. [kapp](https://github.com/carvel-dev/kapp)
 6. [bat](https://github.com/sharkdp/bat)
+7. [tidy](http://www.html-tidy.org/)
 
+## The Demo environment
+The demo environment will deploy 2 kind clusters:
+* **kapp-ctrl-demo** - 2 node with port forwarding for port 80 and 443
+* **cls-02** - 1 node
+  
+On the **kapp-ctrl-demo** cluster we install kapp controller.
+  
+Apps get deployed all on the **kapp-ctrl-demo** cluster except one, to show multi cluster management.
+  
+The demo apps include:
+* Contour - using an http source and kbld
+* Nginx - using git source and helm + ytt for templating
+* Redis - using helm source and templating with custom kapp flags
+* Cert-Manager - using git source and CUE for templating
+* Simple Web App (Deployed on both clusters) - using git source and ytt + downwardAPI for templating
+  
 ## Running The Demo
 1. Run the preperation script
 ```bash
-./prepare.sh
+./scripts/prepare.sh
 ```  
 2. Once you see output similar to the following open a new terminal without closing the previous one
 ```bash
@@ -31,9 +48,9 @@ For this script you will need a linux machine with:
 ```  
 3. In the new terminal run the demo script
 ```bash
-./demo.sh
+./scripts/demo.sh
 ```  
 4. To clean up the environment run the teardown script
 ```bash
-./teardown.sh
+./scripts/teardown.sh
 ```
